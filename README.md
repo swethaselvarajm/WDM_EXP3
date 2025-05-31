@@ -1,6 +1,6 @@
 ### EX3 Implementation of GSP Algorithm In Python
-### DATE: 
-### AIM: To implement GSP Algorithm In Python.
+### AIM: 
+To implement GSP Algorithm In Python.
 ### Description:
 The Generalized Sequential Pattern (GSP) algorithm is a data mining technique used for discovering frequent patterns within a sequence database. It operates by identifying sequences that frequently occur together. GSP works by employing a depth-first search strategy to explore and extract frequent patterns efficiently.
 ### Steps:
@@ -36,6 +36,7 @@ for each wear category.</p>
 <p align="justify">
 8. Visulaize the sequence patterns using matplotlib.
 </p>
+
 ### Program:
 
 ```python
@@ -43,16 +44,24 @@ from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
-
-
-    /WRITE YOUR CODE HERE/
-
+  candidates = defaultdict(int)
+  for sequence in dataset:
+    for itemset in combinations(sequence, k):
+      candidates[itemset] += 1
+  return {item: support for item, support in candidates.items() if support >= min_support}
 
 #Function to perform GSP algorithm
 def gsp(dataset, min_support):
-
-
-  /WRITE YOUR CODE HERE/
+    frequent_pattern = defaultdict(int)
+    k = 1
+    sequence = dataset
+    while True:
+      candidates = generate_candidates(sequence, k)
+      if not candidates:
+        break
+      frequent_pattern.update(candidates)
+      k += 1
+    return frequent_pattern
 
 
 #Example dataset for each category
@@ -102,6 +111,7 @@ else:
  print("No frequent sequential patterns found in Party Wear.")
 ```
 ### Output:
+![Screenshot 2024-09-17 190108](https://github.com/user-attachments/assets/b2bace87-e9a4-41c2-8047-077ae1f9df12)
 
 ### Visualization:
 ```python
@@ -114,7 +124,7 @@ def visualize_patterns_line(result, category):
         support = list(result.values())
 
         plt.figure(figsize=(10, 6))
-        plt.plot([str(pattern) for pattern in patterns], support, marker='o', linestyle='-', color='blue')
+        plt.plot([str(pattern) for pattern in patterns], support, marker='o', linestyle='-', color='green')
         plt.xlabel('Patterns')
         plt.ylabel('Support Count')
         plt.title(f'Frequent Sequential Patterns - {category}')
@@ -130,6 +140,8 @@ visualize_patterns_line(bottom_wear_result, 'Bottom Wear')
 visualize_patterns_line(party_wear_result, 'Party Wear')
 ```
 ### Output:
-
+![Screenshot 2024-09-17 190148](https://github.com/user-attachments/assets/c1fca1f5-02b8-4934-8d92-38f07dd9a755)
+![Screenshot 2024-09-17 190204](https://github.com/user-attachments/assets/8b642ea3-443e-4084-8cef-e96d397238c9)
 
 ### Result:
+Thus the implementation of the GSP algorithm in python has been successfully executed.
